@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<link href="style.css" rel="stylesheet">
+<link rel="shortcut icon" href="edm-project-icon.png">
+<link rel="icon" href="edm-project-icon.png">
+<title>EDM Project - software for teamwork</title>
+<meta name="description" content="Electronic document, project, task tracking system for teamwork. Kanban boards. Document approval process. 
+EDM Project offers the open-source server app to manage team, docs, jobs, projects, other business processes.">
+</head>
+<body>
+<nav id="navbar" class="navbar">
+  <div class="mobilemenu burger" onclick="showMobileMenu();">
+  <div class="bline bline1"></div>
+  <div class="bline bline2"></div>
+  </div>
+  <ul id="menu" class="menu">
+      <li class="navitem"><a href="/">About</a></li>
+      <li class="navitem"><a href="download.html">Download</a></li>
+      <li class="navitem"><a href="screens.html">Screenshots</a></li>
+      <li class="navitem"><a href="demo.html">Live demo</a></li>
+      <li class="navitem"><a href="contact.html">Contact</a></li>
+      <li class="navitem"><a href="manual.html">User Docs</a></li>
+      <li class="navitem"><a href="manual-admin.html">Admin Docs</a></li>
+  </ul>
+</nav>
+
+<div class="shadowbox">
+  <div class="block top">
+    <img class="floating" width="128px" height="128px" src="edm-project-icon.png" alt="EDM Project Logo">
+    <h1 class="nearfloat">EDM Project - software for teamwork</h1>
+    <p class="nearfloat">Open-source software for managing business processes and team interaction.</p>
+    <a class="nearfloat big" href="download.html">Get the software</a>
+    <p class="clearboth"></p>
+  </div>
+
+  <div class="block main">
+
+    <h2>EDM System</h2>
+    <p>EDM System is the main product created by this project.</p>
+    <p>This application is <strong>free</strong> and <strong>open-source</strong> software.</p>
+    <p>EDM System is an application to manage projects, tasks, and docs with simple, intuitive and fast interface.
+      It is relatively easy to install and configure.</p>
+    <br>
+
+    <h3>Functions of the application:</h3> 
+    <ul class="marginbottom">
+      <li>Documents: create, upload files, edit, delete, approve</li>
+      <li>Approval list for documents</li>
+      <li>User profiles, companies, departments: create, edit, delete</li>
+      <li>Tasks: create, edit, upload files, assign, forward, delete, change status (mark as done, cancel, etc.), add comments with files attached</li>
+      <li>Projects: create, edit, add and detach tasks, view tasks by their progress (kanban board), take or assign tasks</li>
+      <li>Notifications by e-mail: about user creation to that user, about approvals, about changes and comments in a task to related users</li>
+      <li>Themes and localization support</li>
+      <li>UX/UI features: bb-code, search results highlighting, etc.</li>
+      <li>Some basic bruteforce protection</li>
+      <li>Redis support to store sessions and other shared data</li>
+      <li>Other functions, not mentioned in this list</li>
+    </ul>
+    <p>Supported themes: dark, light, monochrome-dark, monochrome-light.</p>
+    <p>Supported languages: English, Spanish, French, Russian.</p>
+    <p>Supported databases: SQLite, Microsoft SQL Server, MySQL(MariaDB), Oracle, PostgreSQL.</p>
+    <p class="marginbottom">The application runs on modern browsers: Chrome, Firefox, Safari, and does not support Internet Explorer.</p>
+  </div>
+
+  <div class="block bottom">© 2023 EDM Project</div>
+  </div>
+  <script src="foundation.js"></script>
+</body>
+</html>

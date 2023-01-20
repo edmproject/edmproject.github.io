@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<link href="style.css" rel="stylesheet">
+<link rel="shortcut icon" href="edm-project-icon.png">
+<link rel="icon" href="edm-project-icon.png">
+<title>EDM System: Administrator Documentation</title>
+<meta name="description" content="Electronic document, project and task management system admin help manual.">
+</head>
+<body>
+<nav id="navbar" class="navbar">
+  <div class="mobilemenu burger" onclick="showMobileMenu();">
+  <div class="bline bline1"></div>
+  <div class="bline bline2"></div>
+  </div>
+  <ul id="menu" class="menu">
+      <li class="navitem"><a href="/">About</a></li>
+      <li class="navitem"><a href="download.html">Download</a></li>
+      <li class="navitem"><a href="screens.html">Screenshots</a></li>
+      <li class="navitem"><a href="demo.html">Live demo</a></li>
+      <li class="navitem"><a href="contact.html">Contact</a></li>
+      <li class="navitem"><a href="manual.html">User Docs</a></li>
+      <li class="navitem"><a href="manual-admin.html">Admin Docs</a></li>
+  </ul>
+</nav>
+
+<div class="shadowbox">
+  <div class="block top">
+    <h1>EDM System: Administrator Documentation</h1>
+    <p>Current version: 2.0.0</p>
+  </div>
+  <div class="block main">
+        
+    <p>Please, read <a href="manual.html">user documentation</a> before this administrator documentation in order to understand some basic concepts.</p>
+        
+    <h2 class="margintop">Technical Description</h2>
+    <p>The software should be installed on a server machine and configured to use a database management system selected by you.</p>
+    <p>This software utilizes <a href="https://go.dev/">Go</a> programming language, <a href="https://github.com/alecxcode/sqla">sqla</a> module and drivers for each database type to directly connect to a database server.</p>
+    <p>Probably all platforms where Go programming language is available are supported (Linux, Mac, Windows, etc.).</p>
+    <p>The following RDBMS are supported:</p>
+    <ul>
+        <li>SQLite</li>
+        <li>Microsoft SQL Server</li>
+        <li>MySQL(MariaDB)</li>
+        <li>Oracle</li>
+        <li>PostgreSQL</li>
+    </ul>
+    <p>On the client-side it is necessary to use modern web browsers like Chrome, Firefox, Safari with enabled JavaScript. Internet Exprorer is not supported.</p>
+    <h3 class="margintop">Basic bruteforce protection</h3>
+    <p>This bruteforce protection by default blocks login capability for any users from any IP addresses for 60 minutes after 100 attempts to enter with wrong login or password.</p>
+    <h3 class="margintop">Redis in-memory data store</h3>
+    <p>By default the server process keeps in its memory user sessions, user lists, and some other data, which are shared among all HTTP requests.</p>
+    <p>If Redis options are configured in the config file or environment variables, the server will use the Redis database to keep user sessions, user lists and some other shared data. This should make it possible to use multiple instances of the server process.</p>
+
+    <h2 class="margintop">Installation of a release package</h2>
+    <p>Installing in Windows is easy: run the downloaded distribution file, select a folder to install, and then it runs automatically. This way of installation is more for presentation purposes.</p>
+    <p>On Linux/Mac/BSD: unpack the app somewhere and run <code>./edm</code> executable. If there is no build for your system or it does not work, you need to build it yourself. It is recommended to create a separate user for the server (e.g. with the name <code>edm</code>), like for other servers and configure the software as a service on your system. You should refer to your system administration guides or manuals about how to do that.</p>
+    <p>In order to connect to a database server instead of using SQLite, create database on your server, fill the requred data in config file, and run <code>./edm --createdb --consolelog</code> before the first launch. After that you can launch <code>./edm</code> server.</p>
+    <p>Default login after installation: <b>admin</b>, and the password is empty (there is no password).</p>
+
+    <h2 class="margintop">Upgrading to a new version</h2>
+    <p>Stop the server. Replace the application and all files distributed with it.</p>
+    <p>If a new version includes new features, before launching a new version, run <code>./edm --createdb --consolelog</code> in order to create new tables, indexes, etc.</p>
+    <p>After that you can launch <code>./edm</code> server.</p>
+    
+    <h2 class="margintop">Configuration file</h2>
+    <p>Configuration file by default is located in the <b>.edm</b> directory of a user home directory. The name of this file is <b>edm-system.cfg</b>.</p>
+    <p>If there is no configuration file found on launch, the file will be created with default values.</p>
+    <p>Every line consists of option name and option value which are separated by <code>=</code> sign. Wrong option names, lines started with <code>#</code> are ignored.</p>
+    <p>The following options are available:</p>
+    <p><code>ServerSystem</code> - path where all static files (templates, themes, etc.) are located. Not writable. Default is <code>.</code> (current directory).</p>
+    <p><code>ServerRoot</code> - path where server modifiable files (uploads, logs, etc.) are stored. Should be writable. Default is <code>.edm</code></p>
+    <p><code>ServerHost</code> - ip address to bind the server process. Default is <code>127.0.0.1</code>. To bind the server to all interfaces make this option empty.</p>
+    <p><code>ServerPort</code> - server process port. Default is <code>8090</code>.</p>
+    <p><code>DomainName</code> - domain name of your system. It is used in email notifications.</p>
+    <p><code>DefaultLang</code> - default server language which is used on login page, in emails, by newly created user profiles. Use one of these two-letter codes:
+        <code>en</code>,
+        <code>es</code>,
+        <code>fr</code>,
+        <code>ru</code>.</p>
+    <p><code>StartPage</code> - default "base" page to display after logged-in user opens the system url. Use one of these: 
+        <code>docs</code>,
+        <code>tasks</code>,
+        <code>team</code>.</p>
+    <p><code>RemoveAllowed</code> - permission for owners to delete their objects: <code>true</code> or <code>false</code>.</p>
+    <p><code>RunBrowser</code> - should the server run a browser on launch: <code>true</code> or <code>false</code>.</p>
+    <p><code>UseTLS</code> - whether or not to use https: <code>true</code> or <code>false</code>.</p>
+    <p><code>SSLCertFile</code> - specify certificate file path if UseTLS is set to true.</p>
+    <p><code>SSLKeyFile</code> - specify key file path if UseTLS is set to true.</p>
+    <p><code>CreateDB</code> - if set to true the server will create database tables to initialize empty database. Usually should not be used.</p>
+    <p><code>DBType</code> - specifies RDBMS type. Might be one of these:
+        <code>sqlite</code>,
+        <code>mssql</code> or <code>sqlserver</code>,
+        <code>mysql</code> or <code>mariadb</code>,
+        <code>oracle</code>,
+        <code>postgresql</code> or <code>postgres</code>.</p>
+    <p><code>DBName</code> - database name to connect. For Oracle it is a service name.</p>
+    <p><code>DBHost</code> - host address of the database server.</p>
+    <p><code>DBPort</code> - port of the database server.</p>
+    <p><code>DBUser</code> - database user to connect.</p>
+    <p><code>DBPassword</code> - password of the database user.</p>
+    <p><code>REDISConnect</code> - Redis host and port (e.g. 127.0.0.1:6379). If specified, the app will use Redis.</p>
+    <p><code>REDISPassword</code> - Redis password.</p>
+    <p><code>REDISFlush</code> - clear Redis database on launch: <code>true</code> or <code>false</code>.</p>
+    <p><code>SMTPEmail</code> - email address to use in notification emails.</p>
+    <p><code>SMTPHost</code> - SMTP server host address. Should be specified in order to make notifications work properly.</p>
+    <p><code>SMTPPort</code> - SMTP server port. Should be specified in order to make notifications work properly.</p>
+    <p><code>SMTPUser</code> - SMTP server user. Should be specified in order to make notifications work properly.</p>
+    <p><code>SMTPPassword</code> - SMTP server password. Should be specified in order to make notifications work properly.</p>
+    
+    <h2 class="margintop">Environment variables</h2>
+    <p>After reading configuration file the server tries to read environment variables, which, if present, override corresponding configuration file values.</p>
+    <p>This might be useful when deploying on a system where you should not store your sensitive data in a configuration file.</p>
+    <p>The following variables are available (values are the same as for configuration file):</p>
+    
+    <p><code>EDM_DB_TYPE</code> - RDBMS type.</p>
+    <p><code>EDM_DB_NAME</code> - database name to connect. For Oracle it is a service name.</p>
+    <p><code>EDM_DB_HOST</code> - host address of the database server.</p>
+    <p><code>EDM_DB_PORT</code> - port of the database server.</p>
+    <p><code>EDM_DB_USER</code> - database user to connect.</p>
+    <p><code>EDM_DB_PASSWORD</code> - password of the database user.</p>
+
+    <p><code>EDM_REDIS_CONNECT</code> - Redis host and port (e.g. 127.0.0.1:6379).</p>
+    <p><code>EDM_REDIS_PASSWORD</code> - Redis password.</p>
+    <p><code>EDM_REDIS_FLUSH</code> - clear Redis database on launch: <code>true</code> or <code>false</code>.</p>
+
+    <p><code>EDM_SMTP_EMAIL</code> - email address to use in notification emails.</p>
+    <p><code>EDM_SMTP_HOST</code> - SMTP server host address.</p>
+    <p><code>EDM_SMTP_PORT</code> - SMTP server port.</p>
+    <p><code>EDM_SMTP_USER</code> - SMTP server user.</p>
+    <p><code>EDM_SMTP_PASSWORD</code> - SMTP server password.</p>
+   
+    <p>If you require to use other configuration options as environment variables you can edit <b>config-env.py</b> from <b>internal/config</b> directory. The file has predefined list of prefixes for environment variables. For instance, you can set it to <code>[""]</code> in order to make all config options available as environment variables.</p>
+
+    <h2 class="margintop">Command line arguments</h2>
+    <p>Command-line arguments have higher priority over (overwrite) configuration file values and environment variables.</p>
+    <p><code>--createdb</code> - the server will create database table to initialize empty database.</p>
+    <p><code>--filldb</code> - fill database with showcase data. Useful only for presentation and testing.</p>
+    <p><code>--nobrowser</code> - the server should not run a browser on launch.</p>
+    <p><code>--consolelog</code> - print messages to console instead of a log file.</p>
+
+    <h2 class="margintop">View pages as JSON</h2>
+    <p>The program can display a responce in JSON format. It is applicable for almost any page. This might be useful for connecting this server to other services.</p>
+    <p>To load a page as JSON use the following key and value in GET or POST request: <code>api=json</code>.</p>
+    
+    <h2 class="margintop">Building from source</h2>
+    <p>The simplest way to build the software is to run <code>build-release.sh</code> (<code>build-release.cmd</code> for Windows) command, and then you can run <code>./edm</code> (<code>edm.exe</code> for windows) app in the current directory. These scripts produce a smaller executable with some flags.</p>
+    <p>You can manually run <code>go build</code> in the <b>cmd/edm</b> directory, then move <b>cmd/edm/edm</b> (<b>cmd\edm\edm.exe</b> for windows) executable two directories up, and then run it from the root project directory.</p>
+    <p>You should have Go compiler and C compiler (like one supplied with GCC or MinGW) on your system installed.</p>
+    <p><b>Dockerfile</b> and <b>docker-compose.yml</b> files are available to run the software with Docker.</p>
+    <p><b>addicon.cmd</b> is for adding the program icon into the exe file in Windows - this requires <a href="http://angusj.com/resourcehacker/">Resource Hacker</a> on your system.</p>
+    <p><b>run-unix.sh</b> is a more convenient way to run the software while developing it.</p>
+    <p>In order to know some constants and structs of the app read the package documentation available in source files, for example with <code>go doc --all</code> command.</p>
+    <p>If you add some structs which requires creating tables in a database, you can use <code>go generate</code> command to run <b>sql-gen.py</b> python script to create sql scripts. This runs python3 and requires it to be installed on your system.</p>
+    <p>If you modify server config code, you can use <code>go generate</code> command from <b>internal/config</b> directory to run <b>config-gen.py</b> and <b>config-env.py</b> python scripts to rewrite config loading and saving functions. This runs python3 and requires it to be installed on your system.</p>
+    <p>All compilers, interpreters, executables which are necessary to build the software should be available in a path variable of you environment.</p>
+    <h3 class="margintop">Themes</h3>
+    <p>Any theme is a single css file which name starts with <b>theme-</b> prefix and which is located in the <b>static</b> directory.</p>
+    <p>To add a new theme you just need to create that file with selectors like in other files and place it to the <b>static</b> directory. After server restart new theme will appear on the settings page.</p>
+    <h3 class="margintop">Localization</h3>
+    <p>There are two JSON files wich contain language-specific strings. Name of these files is two-letter language code and .json extension.
+        Server-side files are located in <b>i18nserver</b> directory, and they are relatively small as they are used only for login page and email notifications.
+        Frontend localization files are located in <b>static/i18n</b> directory, and they contain a lot more strings, almost all user interface language. Users can easily switch their interface language on the settings page.
+    </p>
+    <p>To add a new language you need to create those two JSON files with the same structure as existing ones. You need to edit <b>codesui.js</b> file to add a language name there and restart the server.</p>
+
+  </div><div class="block bottom">© 2023 EDM Project</div>
+</div>  <script src="foundation.js"></script>
+</body></html>
