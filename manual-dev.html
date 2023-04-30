@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<link href="style.css" rel="stylesheet">
+<link rel="shortcut icon" href="edm-project-icon.png">
+<link rel="icon" href="edm-project-icon.png">
+<title>EDM System: Administrator Documentation</title>
+<meta name="description" content="Electronic document, project and task management system admin help manual.">
+</head>
+<body>
+<nav id="navbar" class="navbar">
+  <div class="mobilemenu burger" onclick="showMobileMenu();">
+  <div class="bline bline1"></div>
+  <div class="bline bline2"></div>
+  </div>
+  <ul id="menu" class="menu">
+      <li class="navitem"><a href="/">About</a></li>
+      <li class="navitem"><a href="download.html">Download</a></li>
+      <li class="navitem"><a href="screens.html">Screenshots</a></li>
+      <li class="navitem"><a href="demo.html">Live demo</a></li>
+      <li class="navitem"><a href="contact.html">Contact</a></li>
+      <li class="navitem"><a href="manual.html">Docs</a></li>
+  </ul>
+</nav>
+
+<div class="shadowbox">
+  <div class="block top">
+    <h1>EDM System: Developer Documentation</h1>
+    <p>Current version: 2.2.0</p>
+    <ul>
+      <li><a class="sbut smaller inline-block" href="manual.html">User documentation</a></li>
+      <li><a class="sbut smaller inline-block" href="manual-admin.html">Administrator documentation</a></li>
+      <li><strong class="panel smaller inline-block">Developer documentation</strong></li>
+    </ul>
+  </div>
+
+  <div class="block main">
+        
+    <p>Please, read <a href="manual.html">user documentation</a> and <a href="manual-admin.html">administrator documentation</a> before this developer documentation in order to understand some basic concepts.</p>
+        
+    <h2 class="margintop">Building from source</h2>
+    <p>The simplest way to build the software is to run <code>build-release.sh</code> (<code>build-release.cmd</code> for Windows) command, and then you can run <code>./edm</code> (<code>edm.exe</code> for windows) app in the current directory. These scripts produce a smaller executable with some flags.</p>
+    <p>You can manually run <code>go build</code> in the <b>cmd/edm</b> directory, then move <b>cmd/edm/edm</b> (<b>cmd\edm\edm.exe</b> for windows) executable two directories up, and then run it from the root project directory.</p>
+    <p>You should have the Go compiler and a C compiler (like one supplied with GCC or MinGW) on your system installed.</p>
+    <p><b>Dockerfile</b> and <b>docker-compose.yml</b> files are available to run the software with Docker.</p>
+    <p><b>addicon.cmd</b> is for adding the program icon into the exe file in Windows - this requires <a href="http://angusj.com/resourcehacker/">Resource Hacker</a> on your system.</p>
+    <p><b>run-unix.sh</b> is a more convenient way to run the software while developing it.</p>
+    <p>In order to know some constants and structs of the app read the package documentation available in the source files, for example with <code>go doc --all</code> command.</p>
+    <p>All compilers, interpreters, executables which are necessary to build the software should be available in the path variable of your environment.</p>
+
+    <h2 class="margintop">Python code generation</h2>
+    <p>If you require to use more configuration options as environment variables you can edit <b>config-env.py</b> from the <b>internal/config</b> directory. The file has the predefined list of prefixes for environment variables. For instance, you can set it to <code>[""]</code> in order to make all config options available as environment variables.</p>
+    <p>If you add some structs which require creating tables in a database, you can run <code>go generate</code> command from the <b>internal/core</b> directory to launch <b>sql-gen.py</b> python script to create sql scripts. This runs python3 and requires it to be installed on your system.</p>
+    <p>If you modify server config code, you can run <code>go generate</code> command from the <b>internal/config</b> directory to launch <b>config-gen.py</b> and <b>config-env.py</b> python scripts to rewrite config loading and saving functions. This runs python3 and requires it to be installed on your system.</p>
+
+    <h2 class="margintop">View pages as JSON</h2>
+    <p>The program can display a response in JSON format. It is applicable for almost any page. This might be useful for connecting this server to other services.</p>
+    <p>To load a page as JSON use the following key and value in GET or POST request: <code>api=json</code>.</p>
+    
+    <h2 class="margintop">Themes</h2>
+    <p>Any theme is a single css file (except which name starts with <b>system-</b> prefix) and which is located in the <b>static/themes</b> directory.</p>
+    <p>To add a new theme you just need to create that file with selectors like in other files and place it in the <b>static</b> directory. After restarting of the server, the new theme will appear on the settings page.</p>
+    
+    <h2 class="margintop">Localization</h2>
+    <p>There are two JSON files that contain language-specific strings. Name of these files is two-letter language code and .json extension.
+        Server-side files are located in the <b>i18nserver</b> directory, and they are relatively small as they are used only for login page and email notifications.
+        Frontend localization files are located in the <b>static/i18n</b> directory, and they contain a lot more strings, almost all user interface language. Users can easily switch their interface language on the settings page.
+    </p>
+    <p>To add a new language you need to create those two JSON files with the same structure as existing ones. You need to edit <b>codesui.js</b> file to add a language name there and restart the server.</p>
+
+  </div><div class="block bottom">© 2023 EDM Project</div>
+</div>  <script src="foundation.js"></script>
+</body></html>
