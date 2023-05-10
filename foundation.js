@@ -10,7 +10,7 @@ window.onresize = function() {
   if (m) {
     let addr = window.location.pathname;
     let currentItem;
-    let arrPages = ['download', 'screens', 'demo', 'contact', 'manual', 'manual-admin']
+    let arrPages = ['download', 'screens', 'demo', 'contact', 'manual']
     if (addr == "/") {
       currentItem = document.querySelector("#menu a:not(#logo)[href^='/']");
     } else {
