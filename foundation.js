@@ -75,7 +75,7 @@ function appendDiv(parentDiv, divClasses, textNodeText) {
       appendTempDiv(senderDiv, ["red", "disappear"], "Wrong email typed in.");
       return;
     };
-    const URL = 'https://funcfrm.azurewebsites.net/api/frmreceiver'
+    const URL = 'https://feedback.funct.workers.dev/'
     const data = {
       "subject": "EDM System Feedback",
       "name": document.getElementById('name').value,
